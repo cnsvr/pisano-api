@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-
-# spec/models/user_spec.rb
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
@@ -18,7 +16,7 @@ RSpec.describe Question, type: :model do
     it { should validate_inclusion_of(:type).in_array([0, 1]).with_message('Type has to be 0 or 1') }
 
     context 'if type is choice' do
-      before { allow(subject).to receive(:is_choice?).and_return(true) }
+      before { allow(subject).to receive(:choice?).and_return(true) }
       it { should validate_presence_of(:options) }
     end
   end
