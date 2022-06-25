@@ -20,7 +20,8 @@ jobs:
     - name: Setup Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 3.1.0
+        ruby-version: 3.1
+        bundler-cache: true
     - name: Build and run test
       env:
         DATABASE_URL: postgres://postgres:@localhost:5432/pisano_api_test
