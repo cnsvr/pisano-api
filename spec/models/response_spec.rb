@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Response, type: :model do
@@ -14,10 +15,10 @@ RSpec.describe Response, type: :model do
       before { allow(subject.question).to receive(:choice?).and_return(true) }
       it { should validate_presence_of(:option) }
     end
-    
+
     context 'if question is text' do
       before { allow(subject.question).to receive(:text?).and_return(true) }
       it { should validate_presence_of(:body) }
-     end
+    end
   end
 end
