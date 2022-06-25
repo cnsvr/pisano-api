@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -27,9 +29,30 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'net-smtp', '~> 0.3.1'
 
+# rswag is a Ruby gem for generating API documentation from your Rails API.
+gem 'rswag'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  # pry is a runtime developer console and IRB alternative with powerful introspection capabilities.
+  gem 'pry', '~> 0.13.1'
+  # Rspec is a Behavior Driven Development framework for Ruby
+  gem 'rspec-rails', '~> 5.0.0'
+  # Shoulda-matchers is a set of matchers for testing Rails models
+  gem 'shoulda-matchers', '~> 4.2'
+  # factory_bot_rails is a Rails plugin that provides support for testing your factories
+  gem 'factory_bot_rails'
+  # Faker is a Ruby library for generating fake data for testing purposes
+  gem 'faker', '~> 2.1'
+  # Simplecov is a Ruby library for generating test coverage reports
+  gem 'simplecov'
+
+  # rubocop is a linter for Ruby code.
+  gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
 end
 
 group :development do
@@ -39,4 +62,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
