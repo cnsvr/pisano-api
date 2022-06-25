@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2022_06_25_080538) do
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "survey_id", null: false
     t.string "title"
-    t.integer "type"
+    t.integer "type", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_id"], name: "index_questions_on_survey_id"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2022_06_25_080538) do
 
   create_table "responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "feedback_id", null: false
-    t.uuid "question_id"
+    t.uuid "question_id", null: false
     t.uuid "option_id"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false

@@ -3,7 +3,7 @@ class CreateQuestions < ActiveRecord::Migration[6.1]
     create_table :questions, id: :uuid do |t|
       t.references :survey, null: false, foreign_key: true, type: :uuid
       t.string :title
-      t.integer :type
+      t.integer :type, default: 0, null: false
 
       t.timestamps
     end
