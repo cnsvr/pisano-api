@@ -5,12 +5,12 @@ FactoryBot.define do
     question
     feedback
 
-    trait :with_option do
-      option
-    end
-
-    trait :with_body do
-      body { Faker::Lorem.sentence }
+    after(:build) do |response|
+      if response.question.text?
+        response.update(body: Faker::Lorem.sentence)
+      elsif response.question.choice?
+        response.update(option: response.question.options.first)
+      end
     end
   end
 end

@@ -23,7 +23,7 @@ module Api
         @feedback = Feedback.new(feedback_params)
 
         if @feedback.save
-          render json: @feedback, status: :created, location: @feedback
+          render json: @feedback, status: :created
         else
           render json: @feedback.errors, status: :unprocessable_entity
         end
@@ -52,7 +52,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def feedback_params
-        params.fetch(:feedback, {})
+        params.require(:feedback).permit(:survey_id)
       end
     end
   end

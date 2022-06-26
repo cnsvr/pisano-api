@@ -23,7 +23,7 @@ module Api
         @response = Response.new(response_params)
 
         if @response.save
-          render json: @response, status: :created, location: @response
+          render json: @response, status: :created
         else
           render json: @response.errors, status: :unprocessable_entity
         end
@@ -52,7 +52,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def response_params
-        params.require(:response).permit(:body)
+        params.require(:response).permit(:feedback_id, :question_id, :option_id, :body)
       end
     end
   end

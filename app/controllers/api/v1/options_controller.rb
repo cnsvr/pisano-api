@@ -23,7 +23,7 @@ module Api
         @option = Option.new(option_params)
 
         if @option.save
-          render json: @option, status: :created, location: @option
+          render json: @option, status: :created
         else
           render json: @option.errors, status: :unprocessable_entity
         end
@@ -52,7 +52,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def option_params
-        params.require(:option).permit(:title)
+        params.require(:option).permit(:title, :question_id)
       end
     end
   end

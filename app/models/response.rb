@@ -8,4 +8,14 @@ class Response < ApplicationRecord
 
   validates :option, presence: true, if: -> { question&.choice? }
   validates :body, presence: true, if: -> { question&.text? }
+
+  before_validation :check_question_and_option_has_relationship
+
+  private
+
+  def check_question_and_option_has_relationship
+    return if option.blank?
+    return if question.options.include?(option)
+    errors.add(:option, 'is not related to question')
+  end
 end
