@@ -42,9 +42,9 @@ RSpec.describe Api::V1::SurveysController, type: :controller do
     end
 
     it 'returns an error if the survey params are missing' do
-      post :create, params: { survey: { } }
+      post :create, params: { survey: {} }
       expect(response).to have_http_status(:bad_request)
-      expect(parsed_json_body['error']).to eq("param is missing or the value is empty: survey")
+      expect(parsed_json_body['error']).to eq('param is missing or the value is empty: survey')
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::SurveysController, type: :controller do
     end
 
     it 'raises an error if the survey does not exist' do
-      delete :destroy, params: { id: -1 } 
+      delete :destroy, params: { id: -1 }
       expect(response).to have_http_status(:not_found)
       expect(parsed_json_body['error'].present?).to eq(true)
     end

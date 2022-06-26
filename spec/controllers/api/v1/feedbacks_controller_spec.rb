@@ -36,21 +36,21 @@ RSpec.describe Api::V1::FeedbacksController, type: :controller do
     end
 
     it 'returns an error if the feedback is invalid' do
-      post :create, params: { feedback: {survey_id: '123456' } }
+      post :create, params: { feedback: { survey_id: '123456' } }
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(parsed_json_body['survey']).to eq(["must exist"])
+      expect(parsed_json_body['survey']).to eq(['must exist'])
     end
 
     it 'returns an error if the feedback params are missing' do
-      post :create, params: { feedback: { } }
+      post :create, params: { feedback: {} }
       expect(response).to have_http_status(:bad_request)
-      expect(parsed_json_body['error']).to eq("param is missing or the value is empty: feedback")
+      expect(parsed_json_body['error']).to eq('param is missing or the value is empty: feedback')
     end
   end
 
   describe 'PUT #update' do
     it 'updates a feedback' do
-      put :update, params: { id: feedbacks.first.id, feedback: { survey_id: feedbacks.second.survey.id  } }
+      put :update, params: { id: feedbacks.first.id, feedback: { survey_id: feedbacks.second.survey.id } }
       expect(response).to have_http_status(:success)
       expect(parsed_json_body['survey']['name']).to eq(feedbacks.second.survey.name)
     end
@@ -58,7 +58,7 @@ RSpec.describe Api::V1::FeedbacksController, type: :controller do
     it 'returns an error if the feedback is invalid' do
       put :update, params: { id: feedbacks.first.id, feedback: { survey_id: '123456' } }
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(parsed_json_body['survey']).to eq(["must exist"])
+      expect(parsed_json_body['survey']).to eq(['must exist'])
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::FeedbacksController, type: :controller do
     end
 
     it 'raises an error if the feedback does not exist' do
-      delete :destroy, params: { id: -1 } 
+      delete :destroy, params: { id: -1 }
       expect(response).to have_http_status(:not_found)
       expect(parsed_json_body['error'].present?).to eq(true)
     end

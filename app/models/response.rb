@@ -16,6 +16,7 @@ class Response < ApplicationRecord
   def check_question_and_option_has_relationship
     return if option.blank?
     return if question.options.include?(option)
+
     errors.add(:option, 'is not related to question')
   end
 end

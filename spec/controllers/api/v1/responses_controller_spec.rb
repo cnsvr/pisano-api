@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::ResponsesController, type: :controller do
   let!(:responses) { create_list(:response, 3) }
-  
+
   describe 'GET #index' do
     it 'returns all responses' do
-        get :index
-        expect(response).to have_http_status(:success)
-        expect(parsed_json_body.size).to eq(3)
-        expect(parsed_json_body.first['feedback']['id']).to eq(responses.first.feedback_id)
+      get :index
+      expect(response).to have_http_status(:success)
+      expect(parsed_json_body.size).to eq(3)
+      expect(parsed_json_body.first['feedback']['id']).to eq(responses.first.feedback_id)
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe Api::V1::ResponsesController, type: :controller do
     end
 
     it 'returns an error if the response does not exist' do
-      get :show, params: { id: -1 } 
+      get :show, params: { id: -1 }
       expect(response).to have_http_status(:not_found)
       expect(parsed_json_body['error'].present?).to eq(true)
     end
@@ -30,20 +30,25 @@ RSpec.describe Api::V1::ResponsesController, type: :controller do
 
   describe 'POST #create' do
     it 'creates a response' do
-      post :create, params: { response: { feedback_id: responses.first.feedback_id, question_id: responses.first.question_id, body: 'Answer' } }
+      post :create,
+           params: { response: { feedback_id: responses.first.feedback_id, question_id: responses.first.question_id,
+                                 body: 'Answer' } }
       expect(response).to have_http_status(:created)
       expect(parsed_json_body['question']['id']).to eq(responses.first.question_id)
     end
 
     it 'create a response with choice question' do
       question = create(:question, :with_options)
-      post :create, params: { response: { feedback_id: responses.first.feedback_id, question_id: question.id, option_id: question.options.first.id  } }
+      post :create,
+           params: { response: { feedback_id: responses.first.feedback_id, question_id: question.id,
+                                 option_id: question.options.first.id } }
       expect(response).to have_http_status(:created)
       expect(parsed_json_body['question']['id']).to eq(question.id)
     end
 
     it 'returns an error if the response params is invalid' do
-      post :create, params: { response: { feedback_id: responses.first.feedback_id, question_id: responses.first.question_id } }
+      post :create,
+           params: { response: { feedback_id: responses.first.feedback_id, question_id: responses.first.question_id } }
       expect(response).to have_http_status(:unprocessable_entity)
       expect(parsed_json_body['body']).to eq(["can't be blank"])
     end

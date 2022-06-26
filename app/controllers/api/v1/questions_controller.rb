@@ -21,17 +21,8 @@ module Api
       # POST /questions
       def create
         @question = Question.new(question_params.except(:options))
-        
-        if question_params[:type] == 1 # 0 is text, 1 is choice
-          options_params = question_params[:options]
-          options = []
-          options_params.each do |option|
-            next if option[:title].blank?
-            options << Option.new(title: option[:title])
-          end
-          @question.options = options
-        end
 
+        create_options
         if @question.save
           render json: @question, status: :created
         else
@@ -42,20 +33,8 @@ module Api
       # PATCH/PUT /questions/1
       def update
         @question.assign_attributes(question_params.except(:options))
-        
-        if question_params[:type] == 1 # 0 is text, 1 is choice
-          options_params = question_params[:options]
-          options = []
-          options_params.each do |option|
-            next if option[:title].blank?
-            option = Option.find_or_initialize_by(title: option[:title], question_id: @question.id)
-            options << option
-          end
-          @question.options = options
-        else
-          @question.options.destroy_all
-        end
 
+        update_options
         if @question.save
           render json: @question
         else
@@ -78,6 +57,35 @@ module Api
       # Only allow a list of trusted parameters through.
       def question_params
         params.permit(:title, :type, :survey_id, options: [:title]).to_h
+      end
+
+      def create_options
+        return unless question_params[:type] == 1 # 0 is text, 1 is choice
+
+        options_params = question_params[:options]
+        options = []
+        options_params.each do |option|
+          next if option[:title].blank?
+
+          options << Option.new(title: option[:title])
+        end
+        @question.options = options
+      end
+
+      def update_options
+        if question_params[:type] == 1 # 0 is text, 1 is choice
+          options_params = question_params[:options]
+          options = []
+          options_params.each do |option|
+            next if option[:title].blank?
+
+            option = Option.find_or_initialize_by(title: option[:title], question_id: @question.id)
+            options << option
+          end
+          @question.options = options
+        else
+          @question.options.destroy_all
+        end
       end
     end
   end

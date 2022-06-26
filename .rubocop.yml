@@ -6,3 +6,9 @@ AllCops:
     - 'script/**/*'
     - 'bin/**'
     - 'spec/requests/**/*'
+Metrics/BlockLength:
+  Max: 75
+Metrics/MethodLength:
+  Max: 15
+Layout/LineLength:
+ Max: 150

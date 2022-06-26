@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # This is the controller for handling some of the API requests.
     class ApplicationController < ActionController::API
       rescue_from ActiveRecord::RecordNotFound do |exception|
         render json: { error: exception.message }, status: :not_found

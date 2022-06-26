@@ -24,10 +24,10 @@ RSpec.describe Response, type: :model do
     it 'is not valid if question and option have not relation' do
       question = create(:question, :with_options)
       option = create(:option)
-      
+
       subject.question = question
       subject.option = option
-      
+
       expect(subject.valid?).to eq(false)
       expect(subject.errors[:option]).to eq(['is not related to question'])
     end
