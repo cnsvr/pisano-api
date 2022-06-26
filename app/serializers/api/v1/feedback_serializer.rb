@@ -5,6 +5,7 @@ module Api
     class FeedbackSerializer < Api::V1::ApplicationSerializer
       attributes :id
       belongs_to :survey
+      has_many :responses
     end
   end
 end

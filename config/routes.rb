@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :options
       resources :questions
       resources :surveys
+
+      post '/surveys/:id', to: 'surveys#create_feedback'
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

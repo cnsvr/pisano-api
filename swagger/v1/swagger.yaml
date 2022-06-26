@@ -4,6 +4,330 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/feedbacks":
+    get:
+      summary: list feedbacks
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create feedback
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                survey_id:
+                  type: string
+              required:
+              - survey_id
+  "/api/v1/feedbacks/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show feedback
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update feedback
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                survey_id:
+                  type: string
+              required:
+              - survey_id
+    put:
+      summary: update feedback
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                survey_id:
+                  type: string
+              required:
+              - survey_id
+    delete:
+      summary: delete feedback
+      responses:
+        '200':
+          description: successful
+  "/api/v1/options":
+    get:
+      summary: list options
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create option
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                question_id:
+                  type: string
+              required:
+              - title
+              - question_id
+  "/api/v1/options/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show option
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update option
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                question_id:
+                  type: string
+              required:
+              - title
+              - question_id
+    put:
+      summary: update option
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                question_id:
+                  type: string
+              required:
+              - title
+              - question_id
+    delete:
+      summary: delete option
+      responses:
+        '200':
+          description: successful
+  "/api/v1/questions":
+    get:
+      summary: list questions
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create question
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                type:
+                  type: number
+                survey_id:
+                  type: string
+                options:
+                  type: array
+                  message: it is required when question type is choice (1)
+                  items:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+              required:
+              - title
+              - survey_id
+  "/api/v1/questions/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show question
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update question
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                type:
+                  type: number
+                survey_id:
+                  type: string
+                options:
+                  type: array
+                  message: it is required when question type is choice (1)
+                  items:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+              required:
+              - title
+              - survey_id
+    put:
+      summary: update question
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                type:
+                  type: number
+                survey_id:
+                  type: string
+                options:
+                  type: array
+                  message: it is required when question type is choice (1)
+                  items:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+              required:
+              - title
+              - survey_id
+    delete:
+      summary: delete question
+      responses:
+        '200':
+          description: successful
+  "/api/v1/responses":
+    get:
+      summary: list responses
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create response
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              message: body or option_id is required
+              properties:
+                feedback_id:
+                  type: string
+                question_id:
+                  type: string
+                body:
+                  type: string
+                option_id:
+                  type: string
+              required:
+              - feedback_id
+              - question_id
+  "/api/v1/responses/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show response
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update response
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update response
+      parameters: []
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete response
+      responses:
+        '200':
+          description: successful
   "/api/v1/surveys":
     get:
       summary: list surveys
@@ -76,6 +400,34 @@ paths:
       responses:
         '200':
           description: successful
+    post:
+      summary: create feedback
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                feedback:
+                  type: array
+                  message: body or option_id is required
+                  items:
+                    type: object
+                    properties:
+                      question_id:
+                        type: string
+                      body:
+                        type: string
+                      option_id:
+                        type: string
+                    required:
+                    - question_id
+              required:
+              - feedback
 servers:
 - url: http://{host}
   variables:
