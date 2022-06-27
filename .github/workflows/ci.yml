@@ -16,11 +16,11 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     services:
-      db:
+      postgres:
         image: postgres:11
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          POSTGRES_PASSWORD: postgres
         ports: ['5432:5432']
         options:
           --health-cmd pg_isready
@@ -35,14 +35,15 @@ jobs:
         ruby-version: '3.1'
     - name: Build and run test
       env:
-        DATABASE_URL: db://db:@localhost:5432/pisano_api_test
+        DATABASE_URL: postgres://postgres:@localhost:5432/pisano_api_test
         RAILS_ENV: test
         POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: password
+        POSTGRES_PASSWORD: postgres
       run: |
         sudo apt-get -yqq install libpq-dev
         gem install bundler:1.17.3
         bundle install --jobs 4 --retry 3
+        cp config/database.ci.yml config/database.yml
         bundle exec rails db:create
         bundle exec rails db:migrate
         RAILS_ENV=test bundle exec rspec
