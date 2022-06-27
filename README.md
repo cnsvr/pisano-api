@@ -23,3 +23,5 @@ To run tests
  - rails db:create
  - rails db:migrate RAILS_ENV=test
  - bundle exec rspec
+
+Coverage Report is available at /coverage/index.html
