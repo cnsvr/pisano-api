@@ -4,6 +4,7 @@ Pisano is a Customer Experience Management company. We achieve our goal by colle
 ### Built With
 - Ruby, Ruby on Rails
 - PostgreSQL
+- Docker
 
 ####  Installation
 To run with Docker
