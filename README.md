@@ -5,11 +5,20 @@ Pisano is a Customer Experience Management company. We achieve our goal by colle
 - Ruby, Ruby on Rails
 - PostgreSQL
 
-### Getting Started
 ####  Installation
 To run with Docker
- - git clone https://github.com/cnsvr/trendyol-fleet-management-system
- - cd https://github.com/cnsvr/trendyol-fleet-management-system/fleet-management-api
+ - git clone https://github.com/cnsvr/pisano-api
+ - cd pisano-api
  - docker-compose up
 
- it will serve on the http://0.0.0.:3000
+it will serve on the http://0.0.0.0:3000
+all endpoints are available at http://0.0.0.0:3000/api-docs
+
+# Testing
+To run tests
+ - set the host as localhost on config/database.yml
+ - comment out the username and password in config/database.yml
+ - bundle install
+ - rails db:create
+ - rails db:migrate RAILS_ENV=test
+ - bundle exec rspec
