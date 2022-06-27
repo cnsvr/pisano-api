@@ -11,8 +11,9 @@ To run with Docker
  - cd pisano-api
  - docker-compose up
 
-it will serve on the http://0.0.0.0:3000
-all endpoints are available at http://0.0.0.0:3000/api-docs
+It will serve on the http://0.0.0.0:3000
+
+All endpoints are available at http://0.0.0.0:3000/api-docs
 
 # Testing
 To run tests
