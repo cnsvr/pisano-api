@@ -15,7 +15,7 @@ It will serve on the http://0.0.0.0:3000
 
 All endpoints are available at http://0.0.0.0:3000/api-docs
 
-# Testing
+#### Testing
 To run tests
  - set the host as localhost on config/database.yml
  - comment out the username and password in config/database.yml
