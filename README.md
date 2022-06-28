@@ -17,7 +17,10 @@ It will serve on the http://0.0.0.0:3000
 All endpoints are available at http://0.0.0.0:3000/api-docs (Username: pisano Password: pisano1234)
 
 #### Testing
-To run tests
+
+All tests are run by [Github Actions.](https://github.com/cnsvr/pisano-api/actions)
+
+To run tests locally
  - set the host as localhost on config/database.yml
  - comment out the username and password in config/database.yml
  - bundle install
