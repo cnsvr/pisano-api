@@ -51,29 +51,14 @@ module Api
           feedback = Feedback.new(survey: @survey)
           feedback.save
 
-          feedback_params['feedback'].each do |feedback_param|
-            question = Question.find_by(id: feedback_param[:question_id])
-            next unless question.present?
+          build_responses(feedback)
 
-            response = feedback.responses.build(question:)
-            if question.text?
-              body = feedback_param[:body]
-              next unless body.present?
-
-              response.body = body
-            elsif question.choice?
-              option = Option.find_by(id: feedback_param[:option_id])
-              next unless option.present?
-
-              response.option = option
-            end
-
-            response.save
+          if feedback.responses.empty? || feedback.invalid?
+            feedback.destroy
+            head :no_content # returns no content if no responses were created.
+          else
+            render json: @survey, include: ['feedbacks.responses.question', 'feedbacks.responses.option', 'feedbacks.responses.body']
           end
-
-          return feedback.destroy if feedback.responses.nil?
-
-          render json: feedback, status: :created
         end
       end
 
@@ -92,6 +77,32 @@ module Api
       def feedback_params
         params.permit(feedback: %i[question_id body option_id]).to_h
       end
+
+      # rubocop:disable Metrics/AbcSize
+      def build_responses(feedback)
+        params = feedback_params[:feedback]
+
+        params.each do |param|
+          question = Question.find_by(id: param[:question_id])
+          next unless question.present?
+
+          response = feedback.responses.build(question:)
+          if question.text?
+            body = param[:body]
+            next unless body.present?
+
+            response.body = body
+          elsif question.choice?
+            option = Option.find_by(id: param[:option_id])
+            next unless option.present?
+
+            response.option = option
+          end
+
+          response.save
+        end
+      end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end

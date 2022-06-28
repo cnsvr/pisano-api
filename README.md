@@ -14,7 +14,7 @@ To run with Docker
 
 It will serve on the http://0.0.0.0:3000
 
-All endpoints are available at http://0.0.0.0:3000/api-docs
+All endpoints are available at http://0.0.0.0:3000/api-docs (Username: pisano Password: pisano1234)
 
 #### Testing
 To run tests
