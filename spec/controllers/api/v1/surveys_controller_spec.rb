@@ -75,4 +75,43 @@ RSpec.describe Api::V1::SurveysController, type: :controller do
       expect(parsed_json_body['error'].present?).to eq(true)
     end
   end
+
+  describe 'POST #create_feedback' do
+    it 'creates a feedback' do
+      question = create(:question)
+      post :create_feedback, params: { id: surveys.first.id, feedback: [{ question_id: question.id, body: 'Test' }] }
+      expect(response).to have_http_status(:success)
+      expect(parsed_json_body['feedbacks'].size).to eq(1)
+      expect(parsed_json_body['feedbacks'].first['responses'].size).to eq(1)
+      expect(parsed_json_body['feedbacks'].first['responses'].first['body']).to eq('Test')
+    end
+
+    it 'creates more than a feedback' do
+      question1 = create(:question)
+      question2 = create(:question)
+      question3 = create(:question, :with_options)
+      post :create_feedback,
+           params: { id: surveys.first.id,
+                     feedback: [{ question_id: question1.id, body: 'Test_1' }, { question_id: question2.id, body: 'Test_2' },
+                                { question_id: question3.id, option_id: question3.options.last }] }
+      expect(response).to have_http_status(:success)
+      expect(parsed_json_body['feedbacks'].size).to eq(1)
+      expect(parsed_json_body['feedbacks'].first['responses'].size).to eq(3)
+      expect(parsed_json_body['feedbacks'].first['responses'].first['body']).to eq('Test_1')
+      expect(parsed_json_body['feedbacks'].first['responses'].second['body']).to eq('Test_2')
+      expect(parsed_json_body['feedbacks'].first['responses'].third['option']['id']).to eq(question3.options.last.id)
+    end
+
+    it 'returns no content if no valid feedback exists' do
+      question = create(:question)
+      post :create_feedback, params: { id: surveys.first.id, feedback: [{ question_id: question.id, body: '' }] }
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it 'returns an error if the feedback params are missing' do
+      post :create_feedback, params: { id: surveys.first.id, attr: {} }
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(parsed_json_body['error']).to eq('feedback param is missing')
+    end
+  end
 end

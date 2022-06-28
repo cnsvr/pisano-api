@@ -45,7 +45,7 @@ module Api
 
       def create_feedback
         if feedback_params[:feedback].nil?
-          render json: { error: 'feedback is required' }, status: :unprocessable_entity
+          render json: { error: 'feedback param is missing' }, status: :unprocessable_entity
         else
           # TODO:  Write here more clearly !!!!
           feedback = Feedback.new(survey: @survey)
